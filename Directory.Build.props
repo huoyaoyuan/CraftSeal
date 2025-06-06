@@ -1,0 +1,30 @@
+<Project>
+
+  <PropertyGroup>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <ArtifactsPath>$(MSBuildThisFileDirectory)Artifacts</ArtifactsPath>
+
+    <!-- Analyzer config docs: https://docs.microsoft.com/dotnet/core/project-sdk/msbuild-props#code-analysis-properties -->
+    <AnalysisModeDesign>HighlyRecommended</AnalysisModeDesign>
+    <AnalysisModeDocumentation>Recommended</AnalysisModeDocumentation>
+    <AnalysisModeGlobalization>HighlyRecommended</AnalysisModeGlobalization>
+    <AnalysisModeInteroperability>Recommended</AnalysisModeInteroperability>
+    <AnalysisModeMaintainability>Recommended</AnalysisModeMaintainability>
+    <AnalysisModeNaming>Recommended</AnalysisModeNaming>
+    <AnalysisModePerformance>Recommended</AnalysisModePerformance>
+    <AnalysisModeSingleFile>Recommended</AnalysisModeSingleFile>
+    <AnalysisModeReliability>Recommended</AnalysisModeReliability>
+    <AnalysisModeSecurity>HighlyRecommended</AnalysisModeSecurity>
+    <!--<AnalysisModeStyle>Recommended</AnalysisModeStyle>-->
+    <AnalysisModeUsage>Recommended</AnalysisModeUsage>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0130 -->
+    <CompilerVisibleProperty Include="RootNamespace" />
+    <CompilerVisibleProperty Include="ProjectDir" />
+  </ItemGroup>
+
+</Project>
