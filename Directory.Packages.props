@@ -2,4 +2,8 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4188" />
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="1.7.250513003" />
+  </ItemGroup>
 </Project>

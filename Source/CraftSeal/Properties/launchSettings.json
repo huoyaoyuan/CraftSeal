@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CraftSeal (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "CraftSeal (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

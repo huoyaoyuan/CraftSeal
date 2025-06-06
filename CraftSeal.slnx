@@ -1,4 +1,9 @@
 <Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="ARM64" />
+    <Platform Name="x86" />
+  </Configurations>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path=".globalconfig" />
@@ -8,4 +13,10 @@
     <File Path="global.json" />
   </Folder>
   <Project Path="Source/CraftSeal.Core/CraftSeal.Core.csproj" />
+  <Project Path="Source/CraftSeal/CraftSeal.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Deploy />
+  </Project>
 </Solution>
