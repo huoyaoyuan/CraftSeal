@@ -1,4 +1,8 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
+using Microsoft.Windows.ApplicationModel.DynamicDependency;
+using Windows.ApplicationModel;
+using WinRT;
 
 namespace CraftSeal;
 
@@ -23,5 +27,26 @@ public partial class App : Application
     {
         _window = new MainWindow();
         _window.Activate();
+    }
+
+    public static void Main(string[] args)
+    {
+        try
+        {
+            _ = Package.Current;
+        }
+        catch (InvalidOperationException)
+        {
+            // Unpackaged
+            Bootstrap.Initialize(0x00010007);
+        }
+
+        ComWrappersSupport.InitializeComWrappers();
+        Start((p) =>
+        {
+            var context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
+            SynchronizationContext.SetSynchronizationContext(context);
+            _ = new App();
+        });
     }
 }
