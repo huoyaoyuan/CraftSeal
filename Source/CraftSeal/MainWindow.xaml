@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Window
     x:Class="CraftSeal.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -13,7 +13,24 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
-
-    </Grid>
+    <NavigationView
+        PaneTitle="这是一个标题">
+        <NavigationView.AutoSuggestBox>
+            <AutoSuggestBox PlaceholderText="搜索" />
+        </NavigationView.AutoSuggestBox>
+        <NavigationView.MenuItems>
+            <NavigationViewItem Icon="Message">会话 1</NavigationViewItem>
+            <NavigationViewItem Icon="Message">会话 2</NavigationViewItem>
+            <NavigationViewItem Icon="Message">会话 3</NavigationViewItem>
+            <NavigationViewItem Icon="List" Content="分岔会话">
+                <NavigationViewItem.MenuItems>
+                    <NavigationViewItem Icon="Message">分岔 1</NavigationViewItem>
+                    <NavigationViewItem Icon="Message">分岔 2</NavigationViewItem>
+                </NavigationViewItem.MenuItems>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+        <NavigationView.FooterMenuItems>
+            <NavigationViewItem Icon="List">全部会话</NavigationViewItem>
+        </NavigationView.FooterMenuItems>
+    </NavigationView>
 </Window>
