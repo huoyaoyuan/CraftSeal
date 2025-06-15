@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CraftSeal"
+    xmlns:vm="using:CraftSeal.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -14,23 +15,18 @@
     </Window.SystemBackdrop>
 
     <NavigationView
-        PaneTitle="这是一个标题">
+        PaneTitle="这是一个标题"
+        MenuItemsSource="{x:Bind ViewModel.RecentSessions}">
         <NavigationView.AutoSuggestBox>
             <AutoSuggestBox PlaceholderText="搜索" />
         </NavigationView.AutoSuggestBox>
-        <NavigationView.MenuItems>
-            <NavigationViewItem Icon="Message">会话 1</NavigationViewItem>
-            <NavigationViewItem Icon="Message">会话 2</NavigationViewItem>
-            <NavigationViewItem Icon="Message">会话 3</NavigationViewItem>
-            <NavigationViewItem Icon="List" Content="分岔会话">
-                <NavigationViewItem.MenuItems>
-                    <NavigationViewItem Icon="Message">分岔 1</NavigationViewItem>
-                    <NavigationViewItem Icon="Message">分岔 2</NavigationViewItem>
-                </NavigationViewItem.MenuItems>
-            </NavigationViewItem>
-        </NavigationView.MenuItems>
-        <NavigationView.FooterMenuItems>
+        <NavigationView.MenuItemTemplate>
+            <DataTemplate x:DataType="vm:SessionVM">
+                <NavigationViewItem Icon="Message" Content="{x:Bind Title}" />
+            </DataTemplate>
+        </NavigationView.MenuItemTemplate>
+        <!--<NavigationView.FooterMenuItems>
             <NavigationViewItem Icon="List">全部会话</NavigationViewItem>
-        </NavigationView.FooterMenuItems>
+        </NavigationView.FooterMenuItems>-->
     </NavigationView>
 </Window>
