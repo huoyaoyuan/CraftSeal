@@ -6,5 +6,7 @@ internal class NavigationItemStub
 {
     public Symbol Icon { get; set; }
 
-    public string Title { get; set; } = null!;
+    public string Title { get; set; } = "";
+
+    public Type? PageType { get; set; }
 }

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CraftSeal"
     xmlns:vm="using:CraftSeal.ViewModels"
+    xmlns:pages="using:CraftSeal.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -16,7 +17,9 @@
 
     <NavigationView
         PaneTitle="这是一个标题"
-        MenuItemsSource="{x:Bind ViewModel.RecentSessions}">
+        MenuItemsSource="{x:Bind ViewModel.RecentSessions}"
+        SelectionChanged="NavigationView_SelectionChanged"
+        IsBackButtonVisible="Collapsed">
         <NavigationView.AutoSuggestBox>
             <AutoSuggestBox PlaceholderText="搜索" />
         </NavigationView.AutoSuggestBox>
@@ -41,7 +44,12 @@
         </NavigationView.MenuItemTemplateSelector>
         <NavigationView.FooterMenuItems>
             <local:NavigationItemStub Icon="Add" Title="新会话" />
-            <local:NavigationItemStub Icon="List" Title="全部会话" />
+            <local:NavigationItemStub Icon="List" Title="全部会话" PageType="pages:SessionListPage" />
         </NavigationView.FooterMenuItems>
+
+        <Frame
+            x:Name="RootFrame"
+            IsNavigationStackEnabled="False"
+            SourcePageType="pages:BlankPage" />
     </NavigationView>
 </Window>
