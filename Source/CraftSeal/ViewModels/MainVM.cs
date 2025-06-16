@@ -6,4 +6,7 @@ namespace CraftSeal.ViewModels;
 internal partial class MainVM : ObservableObject
 {
     public ObservableCollection<SessionVM> RecentSessions { get; } = [];
+
+    [ObservableProperty]
+    public SessionVM? _selectedSession;
 }

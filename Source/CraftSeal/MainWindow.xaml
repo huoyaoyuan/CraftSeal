@@ -18,8 +18,10 @@
     <NavigationView
         PaneTitle="这是一个标题"
         MenuItemsSource="{x:Bind ViewModel.RecentSessions}"
+        SelectedItem="{x:Bind ViewModel.SelectedSession, Mode=OneWay}"
         SelectionChanged="NavigationView_SelectionChanged"
-        IsBackButtonVisible="Collapsed">
+        IsBackButtonVisible="Collapsed"
+        DataContext="{x:Bind ViewModel}">
         <NavigationView.AutoSuggestBox>
             <AutoSuggestBox PlaceholderText="搜索" />
         </NavigationView.AutoSuggestBox>
