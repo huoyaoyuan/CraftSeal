@@ -2,6 +2,7 @@
 using CraftSeal.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 
 namespace CraftSeal;
 
@@ -26,15 +27,15 @@ public sealed partial class MainWindow : Window
     {
         if (args.IsSettingsSelected)
         {
-            RootFrame.Navigate(typeof(SettingsPage));
+            RootFrame.Navigate(typeof(SettingsPage), null, new EntranceNavigationTransitionInfo());
         }
         else if (args.SelectedItem is SessionVM session)
         {
-            RootFrame.Navigate(typeof(SessionPage), session);
+            RootFrame.Navigate(typeof(SessionPage), session, new EntranceNavigationTransitionInfo());
         }
         else if (args.SelectedItem is NavigationItemStub { PageType: Type p })
         {
-            RootFrame.Navigate(p);
+            RootFrame.Navigate(p, null, new EntranceNavigationTransitionInfo());
         }
     }
 }
