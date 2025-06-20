@@ -29,6 +29,7 @@ public partial class App : Application
         _window.Activate();
     }
 
+    [STAThread]
     public static void Main(string[] args)
     {
         try

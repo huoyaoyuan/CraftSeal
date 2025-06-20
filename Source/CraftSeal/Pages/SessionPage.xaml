@@ -63,6 +63,7 @@
                         <TextBlock
                             x:Name="MessageBlock"
                             IsTextSelectionEnabled="True"
+                            TextWrapping="WrapWholeWords"
                             Text="{x:Bind Message}" />
                     </Border>
                 </DataTemplate>
@@ -70,14 +71,13 @@
         </ListView>
         <TextBox
             Name="MessageTextBox"
-            Grid.Row="2"
-            Grid.Column="0"
-            Margin="4"
-            TextWrapping="Wrap"
-            Text="{x:Bind DataContext.(vm:SessionVM.MessageText), Mode=TwoWay}"/>
+            Grid.Row="2" Grid.Column="0"
+            Margin="4" MaxHeight="200"
+            TextWrapping="Wrap" AcceptsReturn="True"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            Text="{x:Bind DataContext.(vm:SessionVM.MessageText), Mode=TwoWay}" />
         <Button
-            Grid.Row="2"
-            Grid.Column="1"
+            Grid.Row="2" Grid.Column="1"
             Margin="4"
             Command="{x:Bind DataContext.(vm:SessionVM.SendCommand)}"
             CommandParameter="{x:Bind MessageTextBox.Text, Mode=OneWay}">
