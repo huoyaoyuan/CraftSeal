@@ -12,7 +12,15 @@ public sealed partial class MainWindow : Window
     {
         RecentSessions =
         {
-            new SessionVM { Title = "会话 1" },
+            new SessionVM
+            {
+                Title = "会话 1",
+                Messages =
+                {
+                    new MessageVM { Role = MessageRole.User, Message = "Ping!" },
+                    new MessageVM { Role = MessageRole.Assistant, Message = "Pong!" },
+                },
+            },
             new SessionVM { Title = "会话 2" },
             new SessionVM { Title = "会话 3" },
         },

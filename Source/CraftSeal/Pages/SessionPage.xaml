@@ -5,15 +5,79 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CraftSeal.Pages"
     xmlns:vm="using:CraftSeal.ViewModels"
+    xmlns:ix="using:Microsoft.Xaml.Interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
         <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="48"
+            Grid.ColumnSpan="2"
+            FontSize="24"
+            Margin="10"
             Text="{x:Bind DataContext.(vm:SessionVM.Title)}" />
+        <ListView
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Margin="4"
+            ItemsSource="{x:Bind DataContext.(vm:SessionVM.Messages)}"
+            SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="vm:MessageVM">
+                    <Border
+                        x:Name="Border"
+                        Padding="4">
+                        <ix:Interaction.Behaviors>
+                            <ix:DataTriggerBehavior Binding="{x:Bind Role.ToString()}" Value="User">
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=Border}"
+                                    PropertyName="Background"
+                                    Value="{ThemeResource SystemAccentColor}" />
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=Border}"
+                                    PropertyName="HorizontalAlignment"
+                                    Value="Right" />
+                            </ix:DataTriggerBehavior>
+                            <ix:DataTriggerBehavior Binding="{x:Bind Role.ToString()}" Value="Assistant">
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=MessageBlock}"
+                                    PropertyName="Foreground"
+                                    Value="{ThemeResource SystemAccentColor}" />
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=Border}"
+                                    PropertyName="HorizontalAlignment"
+                                    Value="Left" />
+                            </ix:DataTriggerBehavior>
+                        </ix:Interaction.Behaviors>
+
+                        <TextBlock
+                            x:Name="MessageBlock"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind Message}" />
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBox
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="4"
+            TextWrapping="Wrap" />
+        <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="4">
+            <SymbolIcon Symbol="Send" />
+        </Button>
     </Grid>
 </Page>
