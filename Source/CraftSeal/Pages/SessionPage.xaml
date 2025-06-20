@@ -69,14 +69,18 @@
             </ListView.ItemTemplate>
         </ListView>
         <TextBox
+            Name="MessageTextBox"
             Grid.Row="2"
             Grid.Column="0"
             Margin="4"
-            TextWrapping="Wrap" />
+            TextWrapping="Wrap"
+            Text="{x:Bind DataContext.(vm:SessionVM.MessageText), Mode=TwoWay}"/>
         <Button
             Grid.Row="2"
             Grid.Column="1"
-            Margin="4">
+            Margin="4"
+            Command="{x:Bind DataContext.(vm:SessionVM.SendCommand)}"
+            CommandParameter="{x:Bind MessageTextBox.Text, Mode=OneWay}">
             <SymbolIcon Symbol="Send" />
         </Button>
     </Grid>
