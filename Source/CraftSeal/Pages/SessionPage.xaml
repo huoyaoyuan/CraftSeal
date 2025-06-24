@@ -79,7 +79,7 @@
         <Button
             Grid.Row="2" Grid.Column="1"
             Margin="4"
-            Command="{x:Bind DataContext.(vm:SessionVM.SendCommand)}"
+            Command="{x:Bind DataContext.(vm:SessionVM.EchoCommand)}"
             CommandParameter="{x:Bind MessageTextBox.Text, Mode=OneWay}">
             <SymbolIcon Symbol="Send" />
         </Button>

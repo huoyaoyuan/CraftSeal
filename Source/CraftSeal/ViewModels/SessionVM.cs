@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -12,18 +11,12 @@ internal partial class SessionVM : ObservableObject
 
     public ObservableCollection<MessageVM> Messages { get; } = [];
 
-    public SessionVM()
-    {
-        SendCommand = new AsyncRelayCommand<string>(
-            EchoAsync,
-            canExecute: text => !string.IsNullOrEmpty(text));
-    }
-
     [ObservableProperty]
     public string _messageText = string.Empty;
 
-    public ICommand SendCommand { get; }
+    private static bool CanEcho(string? message) => !string.IsNullOrEmpty(message);
 
+    [RelayCommand(CanExecute = nameof(CanEcho))]
     private async Task EchoAsync(string? message)
     {
         ArgumentNullException.ThrowIfNull(message);
