@@ -1,11 +1,10 @@
-﻿using System.Collections.Immutable;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace CraftSeal.Api;
 
 public class ChatRequest
 {
-    public required ImmutableArray<ChatRequestMessage> Messages { get; init; }
+    public required IEnumerable<ChatRequestMessage> Messages { get; init; }
 
     public required string Model { get; init; }
 
@@ -29,7 +28,7 @@ public class ChatRequest
     public double? TopP { get; init; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public ImmutableArray<ToolInfo> Tools { get; init; }
+    public IEnumerable<ToolInfo>? Tools { get; init; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public ToolChoice? ToolChoice { get; init; }
@@ -45,8 +44,11 @@ public record class StreamOptions(bool IncludeUsage);
 
 public class ToolInfo
 {
-    public string Type { get; init; } = "function";
+    public ToolType Type { get; init; }
 }
+
+[JsonConverter(typeof(JsonStringEnumConverter<ToolType>))]
+public enum ToolType { function }
 
 [JsonConverter(typeof(JsonStringEnumConverter<ToolChoice>))]
 public enum ToolChoice { none, auto, required }
