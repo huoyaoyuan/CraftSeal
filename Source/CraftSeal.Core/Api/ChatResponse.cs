@@ -2,11 +2,9 @@
 
 namespace CraftSeal.Api;
 
-public class ChatResponse
+public abstract class ChatResponseBase
 {
     public required Guid Id { get; init; }
-
-    public required CompletionChoice[] Choices { get; init; }
 
     [JsonConverter(typeof(UnixTimestampSecondConverter))]
     public required DateTimeOffset Created { get; init; }
@@ -18,6 +16,16 @@ public class ChatResponse
     public required string Object { get; init; }
 }
 
+public class ChatResponse : ChatResponseBase
+{
+    public required CompletionChoice[] Choices { get; init; }
+}
+
+public class ChatResponseChunk : ChatResponseBase
+{
+    public required CompletionDeltaChoice[] Choices { get; init; }
+}
+
 public class CompletionChoice
 {
     public required CompletionFinishingReason FinishReason { get; init; }
@@ -25,6 +33,15 @@ public class CompletionChoice
     public required int Index { get; init; }
 
     public required CompletionMessage Message { get; init; }
+}
+
+public class CompletionDeltaChoice
+{
+    public required CompletionFinishingReason FinishReason { get; init; }
+
+    public required int Index { get; init; }
+
+    public required CompletionMessage Delta { get; init; }
 }
 
 [JsonConverter(typeof(JsonStringEnumConverter<CompletionFinishingReason>))]
