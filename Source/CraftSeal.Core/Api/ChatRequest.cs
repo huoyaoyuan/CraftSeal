@@ -8,35 +8,27 @@ public class ChatRequest
 
     public required string Model { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public double FrequencyPenalty { get; init; }
+    public double? FrequencyPenalty { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-    public int MaxTokens { get; init; }
+    public int? MaxTokens { get; init; }
 
-    public double PresencePenalty { get; init; }
+    public double? PresencePenalty { get; init; }
 
     public bool Stream { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public StreamOptions? StreamOptions { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public double? Temperature { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public double? TopP { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public IEnumerable<ToolInfo>? Tools { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public ToolChoice? ToolChoice { get; init; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Logprobs { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public int? TopLogprobs { get; init; }
 }
 
@@ -44,13 +36,11 @@ public record class StreamOptions(bool IncludeUsage);
 
 public class ToolInfo
 {
-    public ToolType Type { get; init; }
+    public required ToolType Type { get; init; }
 }
 
-[JsonConverter(typeof(JsonStringEnumConverter<ToolType>))]
 public enum ToolType { function }
 
-[JsonConverter(typeof(JsonStringEnumConverter<ToolChoice>))]
 public enum ToolChoice { none, auto, required }
 
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "role")]
@@ -77,7 +67,6 @@ public class AssistantMessage : ChatRequestMessage
 {
     public bool Prefix { get; init; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? ReasoningContent { get; init; }
 }
 

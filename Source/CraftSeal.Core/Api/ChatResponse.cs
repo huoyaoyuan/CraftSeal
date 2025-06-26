@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace CraftSeal.Api;
 
@@ -6,24 +6,23 @@ public abstract class ChatResponseBase
 {
     public required Guid Id { get; init; }
 
-    [JsonConverter(typeof(UnixTimestampSecondConverter))]
     public required DateTimeOffset Created { get; init; }
 
     public required string Model { get; init; }
 
     public string? SystemFingerprint { get; init; }
 
-    public required string Object { get; init; }
+    public string? Object { get; init; }
 }
 
 public class ChatResponse : ChatResponseBase
 {
-    public required CompletionChoice[] Choices { get; init; }
+    public required IReadOnlyList<CompletionChoice> Choices { get; init; }
 }
 
 public class ChatResponseChunk : ChatResponseBase
 {
-    public required CompletionDeltaChoice[] Choices { get; init; }
+    public required IReadOnlyList<CompletionDeltaChoice> Choices { get; init; }
 }
 
 public class CompletionChoice
@@ -44,7 +43,6 @@ public class CompletionDeltaChoice
     public required CompletionMessage Delta { get; init; }
 }
 
-[JsonConverter(typeof(JsonStringEnumConverter<CompletionFinishingReason>))]
 public enum CompletionFinishingReason
 {
     stop,
@@ -59,7 +57,7 @@ public class CompletionMessage
 
     public string? ReasoningContent { get; init; }
 
-    public ToolCallMessage[]? ToolCalls { get; init; }
+    public IReadOnlyList<ToolCallMessage>? ToolCalls { get; init; }
 
     public required string Role { get; init; }
 }
@@ -77,5 +75,6 @@ public class FunctionCall
 {
     public required string Name { get; init; }
 
+    [StringSyntax(StringSyntaxAttribute.Json)]
     public required string Arguments { get; init; } // JSON，需验证
 }
