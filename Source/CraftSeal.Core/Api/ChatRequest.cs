@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 
 namespace CraftSeal.Api;
 
@@ -13,6 +14,10 @@ public class ChatRequest
     public int? MaxTokens { get; init; }
 
     public double? PresencePenalty { get; init; }
+
+    public ResponseFormat? ResponseFormat { get; init; }
+
+    public IEnumerable<string>? Stop { get; init; }
 
     public bool Stream { get; init; }
 
@@ -34,14 +39,27 @@ public class ChatRequest
 
 public record class StreamOptions(bool IncludeUsage);
 
+public record class ResponseFormat(ResponseFormatType Type);
+
+public enum ResponseFormatType { text, json_object }
+
 public class ToolInfo
 {
     public required ToolType Type { get; init; }
 }
 
+public class FunctionTool
+{
+    public required string Description { get; init; }
+
+    public required string Name { get; init; }
+
+    public required JsonNode Parameters { get; init; }
+}
+
 public enum ToolType { function }
 
-public enum ToolChoice { none, auto, required }
+public enum ToolChoice { auto, none, required }
 
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "role")]
 [JsonDerivedType(typeof(SystemMessage), "system")]
