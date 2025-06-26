@@ -47,11 +47,24 @@ public class ChatClient(
             Stream = true,
         };
 
-        using var response = await _httpClient.PostAsJsonAsync("v1/chat/completions", request, ChatApiSerializationContext.Default.ChatRequest).ConfigureAwait(false);
+        using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "v1/chat/completions")
+        {
+            Content = JsonContent.Create(request, ChatApiSerializationContext.Default.ChatRequest)
+        };
+
+        using var response = await _httpClient.SendAsync(requestMessage, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
         var responseStream = await response.EnsureSuccessStatusCode().Content.ReadAsStreamAsync().ConfigureAwait(false);
 
-        var reader = SseParser.Create(responseStream, (name, value) => JsonSerializer.Deserialize(value, ChatApiSerializationContext.Default.ChatResponseChunk));
+        var reader = SseParser.Create(responseStream, (name, value) =>
+        {
+            if (value.SequenceEqual("[DONE]"u8))
+                return null;
+
+            return JsonSerializer.Deserialize(value, ChatApiSerializationContext.Default.ChatResponseChunk);
+        });
+
         await foreach (var item in reader.EnumerateAsync().ConfigureAwait(false))
-            yield return item.Data ?? throw new Exception("Top level null");
+            if (item.Data != null)
+                yield return item.Data;
     }
 }

@@ -27,7 +27,7 @@ public class ChatResponseChunk : ChatResponseBase
 
 public class CompletionChoice
 {
-    public required CompletionFinishingReason FinishReason { get; init; }
+    public CompletionFinishingReason? FinishReason { get; init; }
 
     public required int Index { get; init; }
 
@@ -36,7 +36,7 @@ public class CompletionChoice
 
 public class CompletionDeltaChoice
 {
-    public required CompletionFinishingReason FinishReason { get; init; }
+    public CompletionFinishingReason? FinishReason { get; init; }
 
     public required int Index { get; init; }
 
@@ -53,13 +53,13 @@ public enum CompletionFinishingReason
 
 public class CompletionMessage
 {
-    public required string? Content { get; init; }
+    public string? Content { get; init; }
 
     public string? ReasoningContent { get; init; }
 
     public IReadOnlyList<ToolCallMessage>? ToolCalls { get; init; }
 
-    public required string Role { get; init; }
+    public string? Role { get; init; }
 }
 
 public class ToolCallMessage
