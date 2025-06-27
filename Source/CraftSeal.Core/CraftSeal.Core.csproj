@@ -5,6 +5,13 @@
     <RootNamespace>CraftSeal</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsTrimmable>true</IsTrimmable>
+    <IsAotCompatible>true</IsAotCompatible>
+    <AnalysisModeNaming>Default</AnalysisModeNaming>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Net.ServerSentEvents" />
+  </ItemGroup>
 
 </Project>
