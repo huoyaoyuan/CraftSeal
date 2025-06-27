@@ -42,7 +42,11 @@
                                 <ix:ChangePropertyAction
                                     TargetObject="{Binding ElementName=Border}"
                                     PropertyName="Background"
-                                    Value="{ThemeResource SystemAccentColor}" />
+                                    Value="{ThemeResource SystemAccentColorDark1}" />
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=MessageBlock}"
+                                    PropertyName="Foreground"
+                                    Value="White" />
                                 <ix:ChangePropertyAction
                                     TargetObject="{Binding ElementName=Border}"
                                     PropertyName="HorizontalAlignment"
@@ -50,9 +54,13 @@
                             </ix:DataTriggerBehavior>
                             <ix:DataTriggerBehavior Binding="{x:Bind Role.ToString()}" Value="Assistant">
                                 <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=Border}"
+                                    PropertyName="Background"
+                                    Value="{ThemeResource SystemAccentColorLight3}" />
+                                <ix:ChangePropertyAction
                                     TargetObject="{Binding ElementName=MessageBlock}"
                                     PropertyName="Foreground"
-                                    Value="{ThemeResource SystemAccentColor}" />
+                                    Value="Black" />
                                 <ix:ChangePropertyAction
                                     TargetObject="{Binding ElementName=Border}"
                                     PropertyName="HorizontalAlignment"
