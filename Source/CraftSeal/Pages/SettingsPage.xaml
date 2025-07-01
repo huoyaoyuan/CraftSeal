@@ -4,15 +4,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CraftSeal.Pages"
+    xmlns:vm="using:CraftSeal.ViewModels"
+    xmlns:tk="using:CommunityToolkit.WinUI"
+    xmlns:c="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-        <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="48"
-            Text="设置页" />
-    </Grid>
+    <StackPanel Orientation="Vertical" Margin="4" Spacing="4">
+        <c:SettingsCard
+            Header="API key"
+            HeaderIcon="{tk:SymbolIcon Symbol=Permissions}"
+            Description="DeepSeek API 的 bearer token">
+            <TextBox Width="300" />
+        </c:SettingsCard>
+    </StackPanel>
 </Page>
