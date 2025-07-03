@@ -26,9 +26,10 @@ public sealed partial class MainWindow : Window
         },
     };
 
-    public MainWindow()
+    public MainWindow(IServiceProvider serviceProvider)
     {
         InitializeComponent();
+        DependencyContainer.SetDependencyContext((FrameworkElement)Content, serviceProvider);
     }
 
     private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
