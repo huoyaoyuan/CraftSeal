@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CraftSeal.Services;
+using CraftSeal.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.ApplicationModel.DynamicDependency;
@@ -26,7 +28,9 @@ public partial class App : Application
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        var services = new ServiceCollection();
+        var services = new ServiceCollection()
+            .AddSingleton<ChatClientService>()
+            .AddScoped<SettingsVM>();
 
         _window = new MainWindow(services.BuildServiceProvider());
         _window.Activate();

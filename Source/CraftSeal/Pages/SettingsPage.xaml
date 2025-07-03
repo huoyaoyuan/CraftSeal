@@ -16,7 +16,7 @@
             Header="API key"
             HeaderIcon="{tk:SymbolIcon Symbol=Permissions}"
             Description="DeepSeek API 的 bearer token">
-            <TextBox Width="300" />
+            <TextBox Width="300" Text="{x:Bind DataContext.(vm:SettingsVM.ApiKey), Mode=TwoWay}" />
         </c:SettingsCard>
     </StackPanel>
 </Page>
