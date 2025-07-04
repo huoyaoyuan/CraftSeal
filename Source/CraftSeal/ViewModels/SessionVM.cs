@@ -30,7 +30,13 @@ internal partial class SessionVM(IServiceProvider serviceProvider) : ObservableO
 
         var response = await _chatClient.ChatAsync(
             [
-                new SystemMessage { Content = "你是一个复读机，请复述你收到的消息" },
+                new SystemMessage { Content = "你是一个人工智能助手，请回答用户的问题。" },
+                .. Messages.Select(m => m.Role switch
+                {
+                    MessageRole.User => (ChatRequestMessage)new UserMessage { Content = m.Message },
+                    MessageRole.Assistant => new AssistantMessage { Content = m.Message },
+                    _ => throw new InvalidOperationException(),
+                }),
                 new UserMessage { Content = message },
             ]).ConfigureAwait(true);
 
