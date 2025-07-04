@@ -1,11 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CraftSeal.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CraftSeal.ViewModels;
 
-internal partial class SessionVM : ObservableObject
+internal partial class SessionVM(IServiceProvider serviceProvider) : ObservableObject
 {
+    private readonly ChatClientService _chatClient = serviceProvider.GetRequiredService<ChatClientService>();
+
     [ObservableProperty]
     private string _title = string.Empty;
 

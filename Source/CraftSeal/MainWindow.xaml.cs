@@ -8,26 +8,19 @@ namespace CraftSeal;
 
 public sealed partial class MainWindow : Window
 {
-    private readonly MainVM ViewModel = new()
-    {
-        RecentSessions =
-        {
-            new SessionVM
-            {
-                Title = "会话 1",
-                Messages =
-                {
-                    new MessageVM { Role = MessageRole.User, Message = "Ping!" },
-                    new MessageVM { Role = MessageRole.Assistant, Message = "Pong!" },
-                },
-            },
-            new SessionVM { Title = "会话 2" },
-            new SessionVM { Title = "会话 3" },
-        },
-    };
+    private readonly MainVM ViewModel;
 
     public MainWindow(IServiceProvider serviceProvider)
     {
+        ViewModel = new()
+        {
+            RecentSessions =
+            {
+                new SessionVM(serviceProvider) { Title = "会话 1" },
+                new SessionVM(serviceProvider) { Title = "会话 2" },
+                new SessionVM(serviceProvider) { Title = "会话 3" },
+            },
+        };
         InitializeComponent();
         DependencyContainer.SetDependencyContext((FrameworkElement)Content, serviceProvider);
     }
