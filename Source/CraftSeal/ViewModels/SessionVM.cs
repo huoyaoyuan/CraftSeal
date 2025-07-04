@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CraftSeal.Api;
 using CraftSeal.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,10 +25,15 @@ internal partial class SessionVM(IServiceProvider serviceProvider) : ObservableO
     private async Task EchoAsync(string? message)
     {
         ArgumentNullException.ThrowIfNull(message);
-
         MessageText = string.Empty;
         Messages.Add(new MessageVM { Role = MessageRole.User, Message = message });
-        await Task.Delay(1000).ConfigureAwait(true);
-        Messages.Add(new MessageVM { Role = MessageRole.Assistant, Message = message });
+
+        var response = await _chatClient.ChatAsync(
+            [
+                new SystemMessage { Content = "你是一个复读机，请复述你收到的消息" },
+                new UserMessage { Content = message },
+            ]).ConfigureAwait(true);
+
+        Messages.Add(new MessageVM { Role = MessageRole.Assistant, Message = response.Choices[0].Message.Content ?? string.Empty });
     }
 }

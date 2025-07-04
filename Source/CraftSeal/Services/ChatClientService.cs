@@ -1,4 +1,6 @@
-﻿namespace CraftSeal.Services;
+﻿using CraftSeal.Api;
+
+namespace CraftSeal.Services;
 
 internal class ChatClientService
 {
@@ -13,5 +15,12 @@ internal class ChatClientService
         ApiKey = apiKey;
         _chatClient = new ChatClient("https://api.deepseek.com/", apiKey);
         // No disposal for old client, to keep old request alive
+    }
+
+    public Task<ChatResponse> ChatAsync(IEnumerable<ChatRequestMessage> messages, CancellationToken cancellationToken = default)
+    {
+        if (_chatClient == null)
+            throw new InvalidOperationException("Uninitialized!");
+        return _chatClient.CompleteAsync(messages, cancellationToken);
     }
 }
