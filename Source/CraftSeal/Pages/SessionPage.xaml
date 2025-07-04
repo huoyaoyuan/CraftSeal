@@ -32,6 +32,11 @@
             Margin="4"
             ItemsSource="{x:Bind DataContext.(vm:SessionVM.Messages)}"
             SelectionMode="None">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel VerticalAlignment="Bottom" ItemsUpdatingScrollMode="KeepLastItemInView" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="vm:MessageVM">
                     <Border
