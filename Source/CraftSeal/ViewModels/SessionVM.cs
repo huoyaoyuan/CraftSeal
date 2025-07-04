@@ -26,9 +26,9 @@ internal partial class SessionVM(IServiceProvider serviceProvider) : ObservableO
     {
         ArgumentNullException.ThrowIfNull(message);
         MessageText = string.Empty;
-        Messages.Add(new MessageVM { Role = MessageRole.User, Message = message });
-        var result = new MessageVM { Role = MessageRole.Assistant };
-        Messages.Add(result);
+
+        MessageVM? reasoningVM = null;
+        MessageVM? resultVM = null;
 
         var response = _chatClient.ChatAsync(
             [
@@ -37,15 +37,36 @@ internal partial class SessionVM(IServiceProvider serviceProvider) : ObservableO
                 {
                     MessageRole.User => (ChatRequestMessage)new UserMessage { Content = m.Message },
                     MessageRole.Assistant => new AssistantMessage { Content = m.Message },
-                    _ => throw new InvalidOperationException(),
-                }),
+                    _ => null!,
+                }).Where(x => x != null),
                 new UserMessage { Content = message },
             ]);
+
+        Messages.Add(new MessageVM { Role = MessageRole.User, Message = message });
 
         await foreach (var chunk in response.ConfigureAwait(true))
         {
             var delta = chunk.Choices[0].Delta;
-            result.Message += delta.Content;
+
+            if (delta.ReasoningContent != null)
+            {
+                if (reasoningVM is null)
+                {
+                    reasoningVM = new() { Role = MessageRole.Reasoning };
+                    Messages.Add(reasoningVM);
+                }
+                reasoningVM.Message += delta.ReasoningContent;
+            }
+
+            if (delta.Content != null)
+            {
+                if (resultVM is null)
+                {
+                    resultVM = new() { Role = MessageRole.Assistant };
+                    Messages.Add(resultVM);
+                }
+                resultVM.Message += delta.Content;
+            }
         }
     }
 }

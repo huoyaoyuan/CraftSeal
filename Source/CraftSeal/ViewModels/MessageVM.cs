@@ -5,6 +5,7 @@ namespace CraftSeal.ViewModels;
 public enum MessageRole
 {
     User,
+    Reasoning,
     Assistant,
 }
 

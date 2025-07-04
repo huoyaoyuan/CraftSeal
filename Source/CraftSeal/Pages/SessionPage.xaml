@@ -66,6 +66,24 @@
                                     PropertyName="HorizontalAlignment"
                                     Value="Left" />
                             </ix:DataTriggerBehavior>
+                            <ix:DataTriggerBehavior Binding="{x:Bind Role.ToString()}" Value="Reasoning">
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=Border}"
+                                    PropertyName="Background"
+                                    Value="{ThemeResource SystemAccentColorLight3}" />
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=MessageBlock}"
+                                    PropertyName="Foreground"
+                                    Value="Black" />
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=MessageBlock}"
+                                    PropertyName="FontStyle"
+                                    Value="Italic" />
+                                <ix:ChangePropertyAction
+                                    TargetObject="{Binding ElementName=Border}"
+                                    PropertyName="HorizontalAlignment"
+                                    Value="Left" />
+                            </ix:DataTriggerBehavior>
                         </ix:Interaction.Behaviors>
 
                         <TextBlock
