@@ -27,8 +27,10 @@ internal partial class SessionVM(IServiceProvider serviceProvider) : ObservableO
         ArgumentNullException.ThrowIfNull(message);
         MessageText = string.Empty;
         Messages.Add(new MessageVM { Role = MessageRole.User, Message = message });
+        var result = new MessageVM { Role = MessageRole.Assistant };
+        Messages.Add(result);
 
-        var response = await _chatClient.ChatAsync(
+        var response = _chatClient.ChatAsync(
             [
                 new SystemMessage { Content = "你是一个人工智能助手，请回答用户的问题。" },
                 .. Messages.Select(m => m.Role switch
@@ -38,8 +40,12 @@ internal partial class SessionVM(IServiceProvider serviceProvider) : ObservableO
                     _ => throw new InvalidOperationException(),
                 }),
                 new UserMessage { Content = message },
-            ]).ConfigureAwait(true);
+            ]);
 
-        Messages.Add(new MessageVM { Role = MessageRole.Assistant, Message = response.Choices[0].Message.Content ?? string.Empty });
+        await foreach (var chunk in response.ConfigureAwait(true))
+        {
+            var delta = chunk.Choices[0].Delta;
+            result.Message += delta.Content;
+        }
     }
 }

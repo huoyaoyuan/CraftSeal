@@ -17,10 +17,10 @@ internal class ChatClientService
         // No disposal for old client, to keep old request alive
     }
 
-    public Task<ChatResponse> ChatAsync(IEnumerable<ChatRequestMessage> messages, CancellationToken cancellationToken = default)
+    public IAsyncEnumerable<ChatResponseChunk> ChatAsync(IEnumerable<ChatRequestMessage> messages, CancellationToken cancellationToken = default)
     {
         if (_chatClient == null)
             throw new InvalidOperationException("Uninitialized!");
-        return _chatClient.CompleteAsync(messages, cancellationToken);
+        return _chatClient.ChunkedCompleteAsync(messages, cancellationToken);
     }
 }

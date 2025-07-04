@@ -72,7 +72,7 @@
                             x:Name="MessageBlock"
                             IsTextSelectionEnabled="True"
                             TextWrapping="WrapWholeWords"
-                            Text="{x:Bind Message}" />
+                            Text="{x:Bind Message, Mode=OneWay}" />
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
