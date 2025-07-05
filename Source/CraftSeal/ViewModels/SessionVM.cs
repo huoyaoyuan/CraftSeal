@@ -12,7 +12,7 @@ internal partial class SessionVM : ObservableObject
     public ObservableCollection<MessageVM> Messages { get; } = [];
 
     [ObservableProperty]
-    public string _messageText = string.Empty;
+    private string _messageText = string.Empty;
 
     private static bool CanEcho(string? message) => !string.IsNullOrEmpty(message);
 
