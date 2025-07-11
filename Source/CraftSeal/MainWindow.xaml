@@ -15,43 +15,54 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <NavigationView
-        PaneTitle="这是一个标题"
-        MenuItemsSource="{x:Bind ViewModel.RecentSessions}"
-        SelectedItem="{x:Bind ViewModel.SelectedSession, Mode=OneWay}"
-        SelectionChanged="NavigationView_SelectionChanged"
-        IsBackButtonVisible="Collapsed"
-        DataContext="{x:Bind ViewModel}">
-        <NavigationView.AutoSuggestBox>
-            <AutoSuggestBox PlaceholderText="搜索" />
-        </NavigationView.AutoSuggestBox>
-        <NavigationView.MenuItemTemplateSelector>
-            <local:MainNavigationSelector>
-                <local:MainNavigationSelector.SessionTemplate>
-                    <DataTemplate x:DataType="vm:SessionVM">
-                        <NavigationViewItem Icon="Message" Content="{x:Bind Title}" />
-                    </DataTemplate>
-                </local:MainNavigationSelector.SessionTemplate>
-                <local:MainNavigationSelector.OtherTemplate>
-                    <DataTemplate x:DataType="local:NavigationItemStub">
-                        <NavigationViewItem
-                            Content="{x:Bind Title}">
-                            <NavigationViewItem.Icon>
-                                <SymbolIcon Symbol="{x:Bind Icon}" />
-                            </NavigationViewItem.Icon>
-                        </NavigationViewItem>
-                    </DataTemplate>
-                </local:MainNavigationSelector.OtherTemplate>
-            </local:MainNavigationSelector>
-        </NavigationView.MenuItemTemplateSelector>
-        <NavigationView.FooterMenuItems>
-            <local:NavigationItemStub Icon="Add" Title="新会话" />
-            <local:NavigationItemStub Icon="List" Title="全部会话" PageType="pages:SessionListPage" />
-        </NavigationView.FooterMenuItems>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <Frame
-            x:Name="RootFrame"
-            IsNavigationStackEnabled="False"
-            SourcePageType="pages:BlankPage" />
-    </NavigationView>
+        <TitleBar Title="CraftSeal" />
+        
+        <NavigationView
+            Grid.Row="1"
+            IsTitleBarAutoPaddingEnabled="True"
+            PaneTitle="这是一个标题"
+            MenuItemsSource="{x:Bind ViewModel.RecentSessions}"
+            SelectedItem="{x:Bind ViewModel.SelectedSession, Mode=OneWay}"
+            SelectionChanged="NavigationView_SelectionChanged"
+            IsBackButtonVisible="Collapsed"
+            DataContext="{x:Bind ViewModel}">
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox PlaceholderText="搜索" />
+            </NavigationView.AutoSuggestBox>
+            <NavigationView.MenuItemTemplateSelector>
+                <local:MainNavigationSelector>
+                    <local:MainNavigationSelector.SessionTemplate>
+                        <DataTemplate x:DataType="vm:SessionVM">
+                            <NavigationViewItem Icon="Message" Content="{x:Bind Title}" />
+                        </DataTemplate>
+                    </local:MainNavigationSelector.SessionTemplate>
+                    <local:MainNavigationSelector.OtherTemplate>
+                        <DataTemplate x:DataType="local:NavigationItemStub">
+                            <NavigationViewItem
+                                Content="{x:Bind Title}">
+                                <NavigationViewItem.Icon>
+                                    <SymbolIcon Symbol="{x:Bind Icon}" />
+                                </NavigationViewItem.Icon>
+                            </NavigationViewItem>
+                        </DataTemplate>
+                    </local:MainNavigationSelector.OtherTemplate>
+                </local:MainNavigationSelector>
+            </NavigationView.MenuItemTemplateSelector>
+            <NavigationView.FooterMenuItems>
+                <local:NavigationItemStub Icon="Add" Title="新会话" />
+                <local:NavigationItemStub Icon="List" Title="全部会话" PageType="pages:SessionListPage" />
+            </NavigationView.FooterMenuItems>
+
+            <Frame
+                x:Name="RootFrame"
+                IsNavigationStackEnabled="False"
+                SourcePageType="pages:BlankPage" />
+        </NavigationView>
+    </Grid>
 </Window>
